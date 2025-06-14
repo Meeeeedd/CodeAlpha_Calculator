@@ -32,6 +32,7 @@ body {
   font-family: "Poppins", sans-serif;
   background-color: var(--bg-color);
   display: flex;
+  flex-direction: column; /* Allow footer to sit below calculator */
   align-items: center;
   justify-content: center;
   min-height: 100vh;
@@ -469,4 +470,61 @@ body {
   font-weight: 500;
   font-size: 1.2rem;
   word-wrap: break-word;
+}
+
+/* --- Developer Footer --- */
+.developer-footer {
+  margin-top: 2rem;
+  padding: 1rem;
+  text-align: center;
+  width: 100%;
+  max-width: 380px;
+  color: var(--text-color-secondary);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.developer-footer .made-by {
+  font-weight: 500;
+  margin: 0;
+}
+
+.developer-footer .made-by a {
+  color: var(--primary-accent);
+  font-weight: 600;
+  text-decoration: none;
+  transition: filter 0.2s ease;
+}
+
+.developer-footer .made-by a:hover {
+  text-decoration: underline;
+  filter: brightness(1.1);
+}
+
+.developer-footer .internship-credit {
+  margin: 0.25rem 0 1rem 0;
+  font-size: 0.8rem;
+}
+
+.footer-contact-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem; /* Space between icons */
+}
+
+.footer-contact-info a {
+  color: var(--text-color-secondary);
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-contact-info a:hover {
+  color: var(--primary-accent);
+  transform: translateY(-2px); /* Slight lift on hover */
+}
+
+.footer-contact-info svg {
+  width: 22px;
+  height: 22px;
+  fill: currentColor; /* The SVG color will match the link color */
 }
