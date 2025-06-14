@@ -21,13 +21,13 @@
         <!-- Header for theme switch and history toggle -->
         <div class="calculator-header">
             <div class="theme-switcher">
-                <input type="checkbox" id="theme-toggle" class="theme-toggle-checkbox">
+                <input type="checkbox" id="theme-toggle" class="theme-toggle-checkbox" aria-label="Toggle light and dark theme">
                 <label for="theme-toggle" class="theme-toggle-label">
                     <span class="sun">☀️</span>
                     <span class="moon">🌙</span>
                 </label>
             </div>
-            <button id="history-btn" class="header-btn">🕒</button>
+            <button id="history-btn" class="header-btn" aria-label="Toggle calculation history">🕒</button>
         </div>
 
         <!-- History panel, initially hidden -->
@@ -46,7 +46,7 @@
         <!-- Grid for all calculator buttons -->
         <div class="grid-buttons">
             <button class="btn btn-clear" data-action="clear">AC</button>
-            <button class="btn" data-action="delete">⌫</button>
+            <button class="btn" data-action="delete" aria-label="Delete">⌫</button>
             <button class="btn btn-operator" data-action="percent">%</button>
             <button class="btn btn-operator" data-operator="divide">÷</button>
             
@@ -77,13 +77,14 @@
     <!-- Modal for the AI Solver Feature -->
     <div id="ai-modal" class="modal-overlay hidden">
         <div class="modal-content">
-            <button id="close-modal-btn" class="close-btn">&times;</button>
+            <button id="close-modal-btn" class="close-btn" aria-label="Close modal">&times;</button>
             <h3 class="modal-title">AI Word Problem Solver</h3>
             <p class="modal-description">Type a math problem and let the AI find the solution.</p>
             <textarea id="word-problem-input" placeholder="e.g., A shirt costs $25 with a 20% discount. What is the final price?"></textarea>
-            <button id="solve-problem-btn" class="solve-btn">✨ Solve Problem</button>
+            <button id="solve-problem-btn" class="solve-btn">
+                <span class="btn-text">✨ Solve Problem</span>
+            </button>
             <div id="loading-spinner" class="spinner-container hidden">
-                <div class="spinner"></div>
                 <p>AI is thinking...</p>
             </div>
             <div id="ai-result-container" class="hidden">
