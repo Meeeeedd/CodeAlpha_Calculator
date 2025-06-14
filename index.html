@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center h-screen">
+    <div class="calculator bg-white rounded-lg shadow-2xl p-6 w-full max-w-xs">
+        <!-- Display Screen -->
+        <div id="display" class="bg-gray-200 text-right text-3xl font-bold rounded-lg p-4 mb-4 text-gray-800">
+            0
+        </div>
+
+        <!-- Calculator Buttons -->
+        <div class="grid grid-cols-4 gap-4">
+            <!-- Row 1 -->
+            <button class="btn-clear bg-red-400 hover:bg-red-500 text-white font-bold py-4 rounded-lg text-xl" data-action="clear">C</button>
+            <button class="btn-operator bg-blue-400 hover:bg-blue-500 text-white font-bold py-4 rounded-lg text-xl" data-operator="divide">÷</button>
+            <button class="btn-operator bg-blue-400 hover:bg-blue-500 text-white font-bold py-4 rounded-lg text-xl" data-operator="multiply">×</button>
+            <button class="btn-operator bg-blue-400 hover:bg-blue-500 text-white font-bold py-4 rounded-lg text-xl" data-operator="subtract">−</button>
+
+            <!-- Row 2 -->
+            <button class="btn-number bg-gray-200 hover:bg-gray-300 font-bold py-4 rounded-lg text-xl" data-number="7">7</button>
+            <button class="btn-number bg-gray-200 hover:bg-gray-300 font-bold py-4 rounded-lg text-xl" data-number="8">8</button>
+            <button class="btn-number bg-gray-200 hover:bg-gray-300 font-bold py-4 rounded-lg text-xl" data-number="9">9</button>
+            <button class="btn-operator bg-blue-400 hover:bg-blue-500 text-white font-bold py-4 rounded-lg text-xl" data-operator="add">+</button>
+
+            <!-- Row 3 -->
+            <button class="btn-number bg-gray-200 hover:bg-gray-300 font-bold py-4 rounded-lg text-xl" data-number="4">4</button>
+            <button class="btn-number bg-gray-200 hover:bg-gray-300 font-bold py-4 rounded-lg text-xl" data-number="5">5</button>
+            <button class="btn-number bg-gray-200 hover:bg-gray-300 font-bold py-4 rounded-lg text-xl" data-number="6">6</button>
+            <button class="btn-equals bg-green-400 hover:bg-green-500 text-white font-bold py-4 rounded-lg text-xl row-span-2" data-action="calculate">=</button>
+
+            <!-- Row 4 -->
+            <button class="btn-number bg-gray-200 hover:bg-gray-300 font-bold py-4 rounded-lg text-xl" data-number="1">1</button>
+            <button class="btn-number bg-gray-200 hover:bg-gray-300 font-bold py-4 rounded-lg text-xl" data-number="2">2</button>
+            <button class="btn-number bg-gray-200 hover:bg-gray-300 font-bold py-4 rounded-lg text-xl" data-number="3">3</button>
+
+            <!-- Row 5 -->
+            <button class="btn-number bg-gray-200 hover:bg-gray-300 font-bold py-4 rounded-lg text-xl col-span-2" data-number="0">0</button>
+            <button class="btn-number bg-gray-200 hover:bg-gray-300 font-bold py-4 rounded-lg text-xl" data-number=".">.</button>
+        </div>
+    </div>
+
+    <script>
+        // JavaScript will go here in the next step
+    </script>
+</body>
+</html>
