@@ -101,37 +101,45 @@ class Calculator {
 
     clear() { this.currentOperand = '0'; this.previousOperand = ''; this.operation = undefined; this.displayNeedsReset = false; }
     delete() { this.currentOperand = this.currentOperand.length > 1 ? this.currentOperand.slice(0, -1) : '0'; }
-    
-    // ** THE PERCENTAGE FIX IS HERE **
-    handlePercent() {
-        if (this.currentOperand === '0' || this.currentOperand === '') return;
-        this.currentOperand = (parseFloat(this.currentOperand) / 100).toString();
-    }
-    
+    handlePercent() { if (this.currentOperand === '0' || this.currentOperand === '') return; this.currentOperand = (parseFloat(this.currentOperand) / 100).toString(); }
     appendNumber(number) { if (number === '.' && this.currentOperand.includes('.')) return; if (this.displayNeedsReset) this.currentOperand = ''; this.displayNeedsReset = false; this.currentOperand = this.currentOperand === '0' && number !== '.' ? number : this.currentOperand + number; }
     chooseOperation(operation) { if (this.currentOperand === '' && this.previousOperand === '') return; if (this.previousOperand !== '') this.calculate(); this.operation = operation; this.previousOperand = this.currentOperand; this.currentOperand = ''; }
     
+    /**
+     * Performs the calculation.
+     * @returns {boolean} - Returns false if an error occurs, otherwise true.
+     */
     calculate() {
-        let result;
         const prev = parseFloat(this.previousOperand);
         const current = parseFloat(this.currentOperand);
-        if (isNaN(prev) || isNaN(current)) return;
+        if (isNaN(prev) || isNaN(current)) return true; // Not an error, just do nothing.
+
+        // ** THE BUG FIX IS HERE: Explicitly handle the error case **
+        if (this.operation === '÷' && current === 0) {
+            this.currentOperandElement.innerText = translations[currentLanguage].errorDivideByZero;
+            this.previousOperandElement.innerText = '';
+            setTimeout(() => {
+                this.clear();
+                this.updateDisplay();
+            }, 2000);
+            return false; // Signal that an error occurred and no further update is needed.
+        }
+
+        let result;
         const expression = `${this.getFormattedNumber(this.previousOperand)} ${this.operation} ${this.getFormattedNumber(this.currentOperand)}`;
         switch (this.operation) {
             case '+': result = prev + current; break;
             case '−': result = prev - current; break;
             case '×': result = prev * current; break;
-            case '÷':
-                if (current === 0) { this.showError(translations[currentLanguage].errorDivideByZero); return; }
-                result = prev / current;
-                break;
-            default: return;
+            case '÷': result = prev / current; break;
+            default: return true;
         }
         this.currentOperand = result.toString();
         this.addHistory(expression, this.currentOperand);
         this.operation = undefined;
         this.previousOperand = '';
         this.displayNeedsReset = true;
+        return true; // Signal success
     }
 
     addHistory(expression, result) { this.history.unshift({ expression, result }); if (this.history.length > 20) this.history.pop(); localStorage.setItem(HISTORY_STORAGE_KEY, JSON.stringify(this.history)); this.updateHistoryDisplay(); }
@@ -161,7 +169,6 @@ class Calculator {
     }
     
     updateDisplay() { this.currentOperandElement.innerText = this.getFormattedNumber(this.currentOperand); this.previousOperandElement.innerText = this.operation ? `${this.getFormattedNumber(this.previousOperand)} ${this.operation}` : ''; }
-    showError(message) { const originalText = this.currentOperandElement.innerText; this.currentOperandElement.innerText = message; setTimeout(() => { this.currentOperandElement.innerText = originalText; this.clear(); this.updateDisplay(); }, 2000); }
 }
 
 // --- DOM Element Selection ---
@@ -204,25 +211,36 @@ historyBtn.addEventListener('click', () => historyPanel.classList.toggle('open')
 document.querySelectorAll('.btn').forEach(button => {
     button.addEventListener('click', () => {
         const { number, operator, action } = button.dataset;
-        if (number) calculator.appendNumber(number);
-        else if (operator) calculator.chooseOperation({'divide': '÷', 'multiply': '×', 'subtract': '−', 'add': '+'}[operator]);
-        // ** THE PERCENTAGE FIX IS HERE **
-        else if (action) {
+        let shouldUpdate = true;
+
+        if (number) {
+            calculator.appendNumber(number);
+        } else if (operator) {
+            calculator.chooseOperation({'divide': '÷', 'multiply': '×', 'subtract': '−', 'add': '+'}[operator]);
+        } else if (action) {
             switch(action) {
                 case 'clear': calculator.clear(); break;
                 case 'delete': calculator.delete(); break;
-                case 'calculate': calculator.calculate(); break;
                 case 'percent': calculator.handlePercent(); break;
+                // ** THE BUG FIX IS HERE: Check return value **
+                case 'calculate': 
+                    shouldUpdate = calculator.calculate(); 
+                    break;
             }
         }
-        calculator.updateDisplay();
+        
+        if (shouldUpdate) {
+            calculator.updateDisplay();
+        }
     });
 });
 document.addEventListener('keydown', (event) => {
     if (document.activeElement.tagName === 'TEXTAREA') return;
     let actionTaken = true;
+    let shouldUpdate = true;
+
     if (event.key >= '0' && event.key <= '9' || event.key === '.') calculator.appendNumber(event.key);
-    else if (event.key === 'Enter' || event.key === '=') { event.preventDefault(); calculator.calculate(); }
+    else if (event.key === 'Enter' || event.key === '=') { event.preventDefault(); shouldUpdate = calculator.calculate(); }
     else if (event.key === 'Backspace') calculator.delete();
     else if (event.key === 'Escape' || event.key.toLowerCase() === 'c') calculator.clear();
     else if (event.key === '%') calculator.handlePercent();
@@ -231,7 +249,8 @@ document.addEventListener('keydown', (event) => {
     else if (event.key === '*') calculator.chooseOperation('×');
     else if (event.key === '/') { event.preventDefault(); calculator.chooseOperation('÷'); }
     else actionTaken = false;
-    if (actionTaken) calculator.updateDisplay();
+    
+    if (actionTaken && shouldUpdate) calculator.updateDisplay();
 });
 
 // --- AI Feature & Modal Logic ---
