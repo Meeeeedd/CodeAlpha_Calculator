@@ -74,8 +74,8 @@ To run this project on your local machine, please follow these steps:
 
 Clone the repository:
 
-git clone https://github.com/your-username/your-repository-name.git
-cd your-repository-name
+git clone https://github.com/Meeeeedd/CodeAlpha_Calculator.git
+cd CodeAlpha_Calculator
 
 Create a .env file in the root of the project folder. This file will hold your secret API key. Add the following line to it:
 
