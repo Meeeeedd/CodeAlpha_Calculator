@@ -1,14 +1,14 @@
 AI-Powered Professional Calculator
 Developed by Mohamed Ben Naima for the CodeAlpha Internship Program (June 2025)
+✨ Live Demo
+The application is fully deployed and accessible online.
+
+Live Site: https://codealpha-mohamed-ben-naima-calculator.onrender.com/
+
 Introduction
 This project is a professional-grade, feature-rich calculator application developed as a key task during my Frontend Development Internship at CodeAlpha. It was built to demonstrate a deep understanding of modern web development concepts, from building a polished and responsive user interface to implementing a secure, full-stack architecture for advanced features.
 
 This application goes far beyond a simple calculator. It is a testament to the hands-on application of knowledge, focusing on creating a secure, user-friendly, and globally accessible tool.
-
-✨ Live Demo
-[This is where you will paste the live URL after deploying the project.]
-
-Live Site: https://your-calculator-app-url.com
 
 📸 Application Showcase
 A visual tour of the calculator's primary features and design.
@@ -74,8 +74,8 @@ To run this project on your local machine, please follow these steps:
 
 Clone the repository:
 
-git clone [your-repository-url]
-cd [your-repository-name]
+git clone https://github.com/your-username/your-repository-name.git
+cd your-repository-name
 
 Create a .env file in the root of the project folder. This file will hold your secret API key. Add the following line to it:
 
